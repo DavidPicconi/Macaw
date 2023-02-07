@@ -1,0 +1,48 @@
+tfinal = 100.0  
+tout = 0.5
+
+nstates = 2
+ndof = 5
+nmodes = 3
+
+steps
+# density   # activate to save the density
+
+# modes      |1  Q5  |2  Q8  |3  Q12 |4  Q14  |5  Q15
+SPF
+ M,  1,4 = 6,5    # multi-set (M) or single-set (S), modes = number of SPFs
+ M,  2   = 6,6
+ S,  3,5 = 7,7
+
+GRID
+  1   sin    56    -8.25  8.25
+  2   gwp    22    -6.3   6.3
+  3   gwp    20    -5.7   5.7
+  4   HO     25     0.0   1.0
+  5   gwp    20    -5.7    5.7
+
+Hamiltonian = ham_interp.op   # Hamiltonian file
+expect = e1.op    # expectation values to compute
+expect = e12.op
+expect = q1.op
+
+
+INIT-WF     # Initial configuration
+   single-conf
+   el  2
+   1   gauss   0.0  0.0  0.707107 
+   2   gwp 0   0.0  0.0  0.707107    ovl = 0.8   scw = 0.9
+   3   gwp 0   0.0  0.0  0.707107    ovl = 0.8   scw = 0.9
+   4   gauss   0.0  0.0  0.707107
+   5   gwp 0   0.0  0.0  0.707107    ovl = 0.8   scw = 0.9
+END-INIT-WF
+
+eps_int = 1.d-6
+eps_rho = 2.d-7
+eps_C = 2.d-6
+eps_S = 2.d-7
+
+integration = DOPRI
+
+minstep = 1.d-8
+
